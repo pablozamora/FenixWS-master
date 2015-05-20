@@ -1,19 +1,11 @@
 /*
 
-Anemometer Tutorial
+Wind Speed Sensot
 
-This code takes the output from an Adafruit anemometer (product ID 1733) and converts it into a wind speed.
+This code takes the output from anemometer (SKU 00200-791) and converts it into a wind speed. 
 
-The circuit:
+By Jhonny Rojas Durán
 
-Created 11 November 2014
-By Joe Burg
-Modified 11 November 2014
-By Joe Burg
-
-Hardware instructions and background information can be found at: http://www.hackerscapes.com/2014/11/anemometer/ ‎
-
-Special thanks to Adafruit forum users shirad and adafruit_support_mike for help in trouble shooting code and hardward, including provided code of their own for comparison and inspiration.
 */
 
 //Setup Variables
@@ -29,10 +21,10 @@ int sensorDelay = 1000; //Delay between sensor readings, measured in millisecond
 //Anemometer Technical Variables
 //The following variables correspond to the anemometer sold by Adafruit, but could be modified to fit other anemometers.
 
-float voltageMin = 1.02; // Mininum output voltage from anemometer in mV.
+float voltageMin = 1.02; // Mininum output voltage from anemometer in V.
 float windSpeedMin = 0; // Wind speed in meters/sec corresponding to minimum voltage
 
-float voltageMax = 5; // Maximum output voltage from anemometer in mV.
+float voltageMax = 5; // Maximum output voltage from anemometer in V.
 float windSpeedMax = 30; // Wind speed in meters/sec corresponding to maximum voltage
 
 
