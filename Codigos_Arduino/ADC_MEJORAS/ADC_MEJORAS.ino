@@ -47,6 +47,7 @@ void loop() {
       // leer valor del sensor
        vcc = readVcc()/1000.0;
        uint16_t sensorValue = analogRead(sensorPin);
+       delay(1);
        voltage = (sensorValue/1023.0)*vcc;
        
   // indicaador LED de dato
