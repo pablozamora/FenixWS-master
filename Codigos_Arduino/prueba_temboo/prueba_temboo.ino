@@ -80,16 +80,16 @@ void loop()
     // for complete details about the inputs for this Choreo
     
     // your Google Client ID
-    AppendRowChoreo.addInput("800673781747-oho2ba1qvjegkk9ia2qs2ebt975om891.apps.googleusercontent.com", GOOGLE_CLIENT_ID);
+    AppendRowChoreo.addInput("ClientID", GOOGLE_CLIENT_ID);
 
     // your Google Client Secret
-    AppendRowChoreo.addInput("H3PqNp2-Q34B_9rTXgz6f3HL", GOOGLE_CLIENT_SECRET);
+    AppendRowChoreo.addInput("ClientSecret", GOOGLE_CLIENT_SECRET);
 
     // your Google Refresh Token
-    AppendRowChoreo.addInput("1/cGMZ_KHYleWr0Fuz_CMawR5L9Hwf4eOWcwybP3BiW9Y", GOOGLE_REFRESH_TOKEN);
+    AppendRowChoreo.addInput("RefreshToken", GOOGLE_REFRESH_TOKEN);
 
     // the title of the spreadsheet you want to append to
-    AppendRowChoreo.addInput("YUN", SPREADSHEET_TITLE);
+    AppendRowChoreo.addInput("SpreadsheetTitle", SPREADSHEET_TITLE);
 
     // convert the time and sensor values to a comma separated string
     String rowData(now);
