@@ -1,5 +1,11 @@
 #define RainPin 5 
 
+//Radiation Variables
+int SPoutput = 0;    // select the input pin for the potentiometer
+int RadiationValue = 0;  // variable to store the value coming from the sensor
+float CalibrationFactor = 0.5; //factor de calibracion de sensor sp-215
+float voltage; 
+
 //Rain Variables
 bool RainHigh=false;
 const float LowAmt=1.0; //when rain is low, takes this ml to trip
@@ -42,6 +48,9 @@ void setup()
 
 void loop() 
 {
+
+//********************************************************* WIND SPEED *********************************************************************************
+
 sensorValue = analogRead(sensorPin); //Get a value between 0 and 1023 from the analog pin connected to the anemometer
 sensorVoltage = sensorValue * voltageConversionConstant; //Convert sensor value to actual voltage
 
@@ -53,6 +62,9 @@ else{
   windSpeed = (sensorVoltage - voltageMin)*windSpeedMax/(voltageMax - voltageMin); //For voltages above minimum value, use the linear relationship to calculate wind speed.
   windSpeed2 = windSpeed*3.6;
 }
+
+
+//********************************************************* RAIN GAUGE *********************************************************************************
 
 if ((RainHigh==false)&&(digitalRead(RainPin)==HIGH)){
    RainHigh=true;
@@ -71,17 +83,29 @@ if ((RainHigh==true)&&(digitalRead(RainPin)==LOW)){
      }
 }
 
+//********************************************************* RADIATION *******************************************************************************
+SPoutput = analogRead(A0);
+voltage = (SPoutput/1023.0)*5;
+RadiationValue = voltage*1000*CalibrationFactor;
+
+
+//***************************************************************************************************************************************************
+
  //Print voltage and windspeed to serial 
   Serial.print("Velocidad del viento: ");
   Serial.print(windSpeed);
   Serial.print(" m/s. or ");
   Serial.print(windSpeed2);
-  Serial.print(" km/h.");
+  Serial.println(" km/h.");
   Serial.print("Acumulador: ");
   Serial.print(RainAccum);
   Serial.print("\t");
   Serial.print("10 mL Acumulador: ");
   Serial.println(DiezMl);
+  Serial.print("Radiación Solar ");
+  Serial.print(RadiationValue);
+  Serial.print("W/m2");
  
  delay(sensorDelay);
 }
+
