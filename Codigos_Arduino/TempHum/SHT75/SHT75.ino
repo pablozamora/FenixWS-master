@@ -24,7 +24,7 @@
 // comandos para el Sensirion
 int temperatureCommand  = B00000011;  // comando para leer temperatura 
 int humidityCommand     = B00000101;  // comando para leer humedad 
-int comandoEstatus      = B00000111;  // comando para leer registro de estatus
+//int comandoEstatus      = B00000111;  // comando para leer registro de estatus
 
 // especifico para el sensor Sensirion
 int clockPin = 3;  // pin para el reloj // HAY Q CAMBIAR LOS PINEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEES
@@ -32,10 +32,10 @@ int dataPin  = 4;  // pin para datos
 int ack;  // detectar posible ocurrencia de errores
 
 // para los 2 sensores independientes
-int temPin = 0;    // pin para el sensor de temperatura
-int humPin = 1;    // pin para el sensor de humedad
-int rojo  = 9;     // los LEDs van en las salidas PWM 9..
-int verde = 10;    // ..y 10
+//int temPin = 0;    // pin para el sensor de temperatura
+//int humPin = 1;    // pin para el sensor de humedad
+//int rojo  = 9;     // los LEDs van en las salidas PWM 9..
+//int verde = 10;    // ..y 10
 int valT = 0;      // variable to store the value coming from the sensor
 int valH = 0;      // idem
 int Nlectura = 0;  // esto cuenta el numero de lecturas
@@ -73,7 +73,7 @@ void loop() {
  
  
  // leo el registro de estatus, por defecto todo 0s (opcional, para verificar)
- leerEstatus();
+ //leerEstatus();
  
  // leer la temperatura (por defecto en 14 bits) y convertirla a grados Celsius
  valT = leerValorTemperatura();                   // lee el dato (integer)
@@ -260,6 +260,7 @@ int getData16SHT(int dataPin, int clockPin) {
  return val;
 }
 
+/*
 // obtener el estatus del Sensirion
 int getDataEstatus(int dataPin, int clockPin) {
  int val, aux;
@@ -281,6 +282,7 @@ int getDataEstatus(int dataPin, int clockPin) {
  digitalWrite(dataPin, LOW);
  digitalWrite(clockPin, LOW);
 }
+*/
 
 // saltarse (no solicitar) la comprobacion CRC
 void skipCrcSHT(int dataPin, int clockPin) { 
@@ -348,6 +350,22 @@ float calcularRocio(float RH, float T) {
  return Ro;  // devuelvo
 }
 
+// calcular la humedad relativa verdadera corregido por la temperatura
+float calcularHumedadVerdadera(float T, int valH, float HR, int numerobitsH) {
+ float t1 = 0.01;
+ float t2 = 0.0;
+ float HRtrue = 0.0;
+ 
+ if (numerobitsH == 12) {  // el numero de bits para medir la humedad son 8 o 12
+   t2 = 0.00008;
+ } else {
+   t2 = 0.00128;
+ }
+ 
+ HRtrue = (T - 25.0) * (t1 + t2 * valH) + HR;
+ return HRtrue;
+}
+
 // sacar por pantalla (se puede comentar al gusto, para no sacar tanta info)
 void representar(float T, float HR, float RHtrue, float Rocio, int valT, int valH) {
  Serial.println("*************************************************************************");
@@ -374,22 +392,8 @@ void representar(float T, float HR, float RHtrue, float Rocio, int valT, int val
  Serial.println(" %");  
 }
 
-// calcular la humedad relativa verdadera corregido por la temperatura
-float calcularHumedadVerdadera(float T, int valH, float HR, int numerobitsH) {
- float t1 = 0.01;
- float t2 = 0.0;
- float HRtrue = 0.0;
- 
- if (numerobitsH == 12) {  // el numero de bits para medir la humedad son 8 o 12
-   t2 = 0.00008;
- } else {
-   t2 = 0.00128;
- }
- 
- HRtrue = (T - 25.0) * (t1 + t2 * valH) + HR;
- return HRtrue;
-}
 
+/*
 // leer la palabra de estatus
 void leerEstatus() {
  int val= 0;
@@ -401,3 +405,4 @@ void leerEstatus() {
  Serial.print("estatus = ");
  Serial.println(val, BIN);
 }
+*/
