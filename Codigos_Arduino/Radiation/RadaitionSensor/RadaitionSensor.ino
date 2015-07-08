@@ -1,4 +1,3 @@
-
 int SPoutput = 0;    // select the input pin for the potentiometer
 int RadiationValue = 0;  // variable to store the value coming from the sensor
 float CalibrationFactor = 0.5;
