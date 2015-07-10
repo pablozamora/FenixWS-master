@@ -176,6 +176,7 @@ void loop () {
   //Serial.print("Temprature:");
   //Serial.println(temp);
   int temp_raw = getTempSHT(); // get raw temperature value
+  Serial.println("Lectura completa");
   Serial.println("Temperature(C): ");
   float temp_degc = (temp_raw * D2) + D1; // Unit Conversion - See datasheet
   Serial.println(temp_degc);
