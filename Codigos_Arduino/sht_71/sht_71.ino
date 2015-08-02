@@ -20,6 +20,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+#include <Bridge.h>
+#include <Console.h>
+
 
 int dataPin = 9;
 int sckPin = 8;
@@ -96,8 +99,8 @@ void writeByteSHT(byte data)
   
   //debug
   i *= 10;
-  //Serial.print("Response time = ");
-  //Serial.println(i);
+  //Console.print("Response time = ");
+  //Console.println(i);
 }
 
 //Read 16 bits from the SHT sensor
@@ -118,7 +121,7 @@ int readByte16SHT()
     if(i != 8) {
       digitalWrite(sckPin,HIGH);
       temp = digitalRead(dataPin);
-      //Serial.print(temp,BIN);
+      //Console.print(temp,BIN);
       cwt = cwt + bitmask * temp;
       digitalWrite(sckPin,LOW);
       bitmask=bitmask/2;
@@ -137,7 +140,7 @@ int readByte16SHT()
   //leave clock high??
   digitalWrite(sckPin,HIGH);
   
-//  Serial.println();
+//  Console.println();
   
   return cwt;
 }
@@ -161,33 +164,33 @@ void setup() {
   pinMode(dataPin,OUTPUT);
   pinMode(sckPin,OUTPUT);
 
-  Serial.begin(9600);        // connect to the serial port
+  Console.begin();        // connect to the Console port
   
-  Serial.println("Inicializando Sensor");
-  Serial.println(" ");
+  Console.println("Inicializando Sensor");
+  Console.println(" ");
   resetSHT();
 }
 
 void loop () {
   delay(4000);
-  Serial.println("Actualizando Dato");
+  Console.println("Actualizando Dato");
   resetSHT();
   //int temp = getTempSHT();
-  //Serial.print("Temprature:");
-  //Serial.println(temp);
+  //Console.print("Temprature:");
+  //Console.println(temp);
   int temp_raw = getTempSHT(); // get raw temperature value
-  Serial.println("Lectura completa");
-  Serial.println("Temperature(C): ");
+  Console.println("Lectura completa");
+  Console.println("Temperature(C): ");
   float temp_degc = (temp_raw * D2) + D1; // Unit Conversion - See datasheet
-  Serial.println(temp_degc);
+  Console.println(temp_degc);
   resetSHT();
   //int temp = getHumidSHT();
-  //Serial.print("Humidity:");
-  //Serial.println(temp);
+  //Console.print("Humidity:");
+  //Console.println(temp);
   int rh_raw = getHumidSHT(); // get raw Humidity value
-  Serial.println("Humidity(%): ");
+  Console.println("Humidity(%): ");
   float rh_lin = C3 * rh_raw * rh_raw + C2 * rh_raw + C1; // Linear conversion
   float rh_true = (((temp_degc - 25) * (T1 + T2 * rh_raw)) + rh_lin); // Temperature compensated RH
-  Serial.println(rh_true);
-  Serial.println(" ");  
+  Console.println(rh_true);
+  Console.println(" ");  
 }
